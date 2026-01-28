@@ -1,0 +1,67 @@
+{
+  "multipart": [
+    {
+      "apply": [
+        {
+          "model": "greekfantasy:block/nest_slab",
+          "weight": 2
+        },
+        {
+          "model": "greekfantasy:block/nest_slab_variant",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "when": {
+      	"OR": [
+      	  {"north": "true"},
+      	  {"east": "true"}
+      	]
+      },
+      "apply": {
+        "model": "greekfantasy:block/nest_octal",
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+      	"OR": [
+      	  {"south": "true"},
+      	  {"east": "true"}
+      	]
+      },
+      "apply": {
+        "model": "greekfantasy:block/nest_octal",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+      	"OR": [
+      	  {"south": "true"},
+      	  {"west": "true"}
+      	]
+      },
+      "apply": {
+        "model": "greekfantasy:block/nest_octal",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+      	"OR": [
+      	  {"north": "true"},
+      	  {"west": "true"}
+      	]
+      },
+      "apply": {
+        "model": "greekfantasy:block/nest_octal",
+        "y": 270,
+        "uvlock": true
+      }
+    }
+  ]
+}

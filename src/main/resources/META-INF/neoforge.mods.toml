@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="GNU GPLv3"
+issueTrackerURL="https://github.com/skyjay1/GreekFantasy/issues"
+
+[[mods]]
+    modId="${mod_id}"
+    version="${mod_version}"
+    displayName="${mod_name}"
+    logoFile = "icon.png"
+    credits=""
+    authors="skyjay1, Goodbird, Raguto"
+    description='''${mod_description}'''
+
+[[dependencies.greekfantasy]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neoforge_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.greekfantasy]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.greekfantasy]]
+    modId="bettercombat"
+    type="optional"
+    versionRange="[1.8.6+1.21.1,)"
+    ordering="AFTER"
+    side="BOTH"

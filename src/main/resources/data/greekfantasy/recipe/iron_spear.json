@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " OI",
+    " /O",
+    "/  "
+  ],
+  "key": {
+    "/": { "tag": "c:rods/wooden" },
+    "I": { "tag": "c:ingots/iron" },
+    "O": { "item": "minecraft:string" }
+  },
+  "result": {
+    "id": "greekfantasy:iron_spear"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "greekfantasy:avernal_hide" },
+    { "item": "minecraft:book" }
+  ],
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "components": {
+      "minecraft:stored_enchantments": {
+        "levels": {
+          "minecraft:fire_protection": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "greekfantasy:block/reeds_bottom"
+    },
+    "half=upper": {
+      "model": "greekfantasy:block/reeds_top"
+    }
+  }
+}

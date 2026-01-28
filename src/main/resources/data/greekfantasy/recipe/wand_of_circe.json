@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ODP",
+    " / ",
+    " / "
+  ],
+  "key": {
+    "/": { "tag": "c:rods/wooden" },
+    "P": { "item": "minecraft:porkchop" },
+    "O": { "item": "greekfantasy:boar_ear" },
+    "D": { "item": "minecraft:diamond" }
+  },
+  "result": {
+    "id": "greekfantasy:wand_of_circe"
+  }
+}

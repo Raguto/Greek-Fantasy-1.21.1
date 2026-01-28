@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "IXI",
+    "###"
+  ],
+  "key": {
+    "I": { "item": "greekfantasy:ichor" },
+    "#": { "tag": "c:ingots/gold" },
+    "X": { "tag": "c:storage_blocks/iron" }
+  },
+  "result": {
+    "id": "greekfantasy:thunderbolt"
+  }
+}

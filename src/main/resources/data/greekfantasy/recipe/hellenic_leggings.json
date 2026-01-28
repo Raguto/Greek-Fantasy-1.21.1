@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "V#V",
+    "# #",
+    "# #"
+  ],
+  "key": {
+    "#": { "tag": "c:ingots/copper" },
+    "V": { "tag": "c:ingots/bronze" }
+  },
+  "result": {
+    "id": "greekfantasy:hellenic_leggings",
+    "count": 1
+  }
+}

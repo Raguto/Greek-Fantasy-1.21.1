@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I I",
+    "O/O",
+    " / "
+  ],
+  "key": {
+    "/": { "tag": "c:rods/blaze" },
+    "I": { "tag": "c:ingots/bronze" },
+    "O": { "item": "greekfantasy:avernal_hair" }
+  },
+  "result": {
+    "id": "greekfantasy:bident"
+  }
+}

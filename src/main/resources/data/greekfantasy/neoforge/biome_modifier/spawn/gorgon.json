@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#greekfantasy:has_spawn/hostile_non_nether",
+  "spawners": [
+    {
+      "type": "greekfantasy:gorgon",
+      "weight": 19,
+      "minCount": 1,
+      "maxCount": 2
+    }
+  ]
+}

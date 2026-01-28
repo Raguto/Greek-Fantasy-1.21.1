@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(done)",
+      "Bash(for file in GiantBoar.java Hydra.java NemeanLion.java Python.java)",
+      "Bash(do sed -i 's/import net\\\\.minecraftforge\\\\.registries\\\\.ForgeRegistries;/import net.minecraft.core.registries.BuiltInRegistries;/g' \"$file\")",
+      "Bash(echo:*)",
+      "Bash(./gradlew tasks:*)",
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew compileJava:*)",
+      "Bash(timeout 120 ./gradlew:*)",
+      "Bash(tee:*)",
+      "Bash(1)",
+      "Bash(gradlew build:*)",
+      "Bash(gradlew compileJava:*)",
+      "Bash(cat:*)",
+      "Bash(bash:*)",
+      "Bash(for file in DeityEnchantment HuntingEnchantment MirroringEnchantment OverstepEnchantment PoisoningEnchantment SilkstepEnchantment SmashingEnchantment)",
+      "Bash(do echo \"/* TODO 1.21: Rewrite with data-driven enchantments\")",
+      "Bash(java -c 'import re; f=open\\(\"\"src/main/java/greekfantasy/GFEvents.java\"\"\\).read\\(\\); opens = len\\(re.findall\\(r\"\"\\\\{\"\", f\\)\\); closes = len\\(re.findall\\(r\"\"\\\\}\"\", f\\)\\); print\\(f\"\"Opens: {opens}, Closes: {closes}\"\"\\)')",
+      "Bash(python3:*)",
+      "Bash(for f in src/main/java/greekfantasy/entity/boss/Cerberus.java src/main/java/greekfantasy/entity/boss/Charybdis.java src/main/java/greekfantasy/entity/boss/CretanMinotaur.java src/main/java/greekfantasy/entity/boss/Geryon.java src/main/java/greekfantasy/entity/boss/GiantBoar.java src/main/java/greekfantasy/entity/Elpis.java src/main/java/greekfantasy/entity/Gigante.java src/main/java/greekfantasy/entity/GoldenRam.java src/main/java/greekfantasy/entity/monster/Circe.java src/main/java/greekfantasy/entity/monster/Cyclops.java src/main/java/greekfantasy/entity/monster/Drakaina.java)",
+      "Bash(do sed -i 's/public void finalizeSpawn/public SpawnGroupData finalizeSpawn/g' \"$f\")",
+      "Bash(while read f)",
+      "Bash(do sed -i:*)",
+      "Bash(.gradlew.bat build)",
+      "Bash(cmd /c:*)",
+      "Bash(cd:*)",
+      "Bash(./gradlew.bat build:*)",
+      "Bash(gradlew.bat build:*)",
+      "Bash(./gradlew clean build:*)",
+      "Bash(dir \"c:\\\\Users\\\\Raguto\\\\Desktop\\\\Port Mods\\\\GreekFantasyUnofficial-master-1.20\\\\build\\\\libs\")",
+      "Bash(unzip:*)"
+    ]
+  }
+}

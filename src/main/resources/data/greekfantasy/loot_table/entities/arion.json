@@ -1,0 +1,43 @@
+{
+  "pools": [
+	{
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 4,
+                "max": 8
+              }
+            },
+            {
+              "function": "minecraft:apply_bonus",
+              "enchantment": "minecraft:looting",
+              "formula": "minecraft:uniform_bonus_count",
+              "parameters": {
+                "bonusMultiplier": 1.0
+              },
+              "count": {
+                "min": 2,
+                "max": 4
+              }
+            }
+          ],
+          "name": "minecraft:gold_nugget"
+        }
+      ]
+    },
+    {
+	  "rolls": 1,
+	  "entries": [
+    {
+      "type": "minecraft:loot_table",
+      "value": "minecraft:entities/horse"
+    }
+	  ]
+	}
+  ]
+}

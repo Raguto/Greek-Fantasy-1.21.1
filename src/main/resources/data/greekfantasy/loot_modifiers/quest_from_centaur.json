@@ -1,0 +1,16 @@
+{
+  "type": "greekfantasy:quest",
+  "conditions": [
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.5
+    }
+  ],
+  "paths": [
+    "greekfantasy:entities/centaur"
+  ],
+  "count": {
+    "type": "minecraft:constant",
+    "value": 1
+  }
+}

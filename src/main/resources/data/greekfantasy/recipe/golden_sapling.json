@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "tag": "minecraft:saplings" },
+	{ "item": "greekfantasy:golden_fleece" }
+  ],
+  "result": {
+    "id": "greekfantasy:golden_sapling",
+    "count": 1
+  }
+}

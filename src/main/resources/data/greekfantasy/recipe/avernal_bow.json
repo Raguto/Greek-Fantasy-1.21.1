@@ -1,0 +1,24 @@
+{
+
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " /S",
+    "/ S",
+    " /S"
+  ],
+  "key": {
+    "S": { "item": "greekfantasy:avernal_hair" },
+    "/": { "tag": "c:rods/wooden" }
+  },
+  "result": {
+    "id": "greekfantasy:avernal_bow",
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "minecraft:vanishing_curse": 1,
+          "minecraft:flame": 1
+        }
+      }
+    }
+  }
+}

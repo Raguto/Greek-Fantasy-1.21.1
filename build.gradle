@@ -1,0 +1,195 @@
+plugins {
+    id 'eclipse'
+    id 'maven-publish'
+    id 'net.neoforged.gradle.userdev' version '7.0.145'
+}
+
+version = project.mod_version
+group = project.maven_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+base.archivesName = project.archives_base_name
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
+
+    client {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    server {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        programArgument '--nogui'
+    }
+
+    gameTestServer {
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
+
+    data {
+        programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+    }
+}
+
+repositories {
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+    maven { // CURSE
+        name 'CurseMaven'
+        url 'https://www.cursemaven.com/'
+    }
+    maven { // MODRINTH
+        url 'https://api.modrinth.com/maven'
+    }
+    maven { // CLOTH CONFIG
+        url "https://maven.shedaniel.me/"
+    }
+    maven { // CLOTH CONFIG
+        url "https://maven.terraformersmc.com/releases/"
+    }
+    maven { // PLAYERANIMATOR
+        name "KosmX's maven"
+        url "https://maven.kosmx.dev/"
+    }
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${project.neoforge_version}"
+
+    // RPG Gods
+    //compileOnly "curse.maven:rpggods-${project.rpggods_project}:${project.rpggods_file}"
+    //runtimeOnly "curse.maven:rpggods-${project.rpggods_project}:${project.rpggods_file}"
+
+    // JEI
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+
+    // Better Combat - check if versions exist for 1.21.1
+    // implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
+    // implementation "dev.kosmx.player-anim:player-animation-lib-forge:${project.player_animator_version}"
+    // implementation "maven.modrinth:better-combat:${project.better_combat_version}-neoforge"
+
+}
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+        minecraft_version: minecraft_version,
+        minecraft_version_range: minecraft_version_range,
+        neoforge_version: neoforge_version,
+        neoforge_version_range: neoforge_version_range,
+        loader_version_range: loader_version_range,
+        mod_id: mod_id,
+        mod_name: mod_name,
+        mod_version: mod_version,
+        mod_authors: mod_authors,
+        mod_description: mod_description
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "${mod_name}",
+                "Specification-Vendor": "${mod_authors}",
+                "Specification-Version": "1", // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor" :"skyjay1",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+// Example configuration to allow publishing using the maven-publish task
+// NeoForge handles reobfuscation automatically
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+javadoc {
+  failOnError = false
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+    options.compilerArgs += ["-Xmaxerrs", "500000"]
+}
+
+
+task deploy {
+    dependsOn tasks.named('jar')
+    
+    doLast {
+        def modsDir = file('D:/instances/NeoForge 1.21.1/minecraft/mods')
+
+        if (!modsDir.exists()) {
+            logger.warn("deploy: target mods directory does not exist: ${modsDir}")
+            return
+        }
+
+        modsDir.listFiles().each { f ->
+            try {
+                if (f.name.contains('greekfantasy') && f.name.endsWith('.jar')) {
+                    logger.lifecycle("deploy: deleting old jar from mods folder: ${f.name}")
+                    f.delete()
+                }
+            } catch (Throwable e) {
+                logger.warn("deploy: failed to delete ${f.name}: ${e.message}")
+            }
+        }
+
+        def jarTask = tasks.named('jar').get()
+        copy {
+            from jarTask.archiveFile
+            into modsDir
+        }
+
+        logger.lifecycle("deploy: copied ${jarTask.archiveFile.get().asFile.name} to ${modsDir}")
+    }
+}
+
+tasks.named('clean') {
+    doLast {
+        def buildLibs = file('build/libs')
+        if (buildLibs.exists()) {
+            buildLibs.listFiles().each { f ->
+                if (f.name.contains('greekfantasy') && f.name.endsWith('.jar')) {
+                    logger.lifecycle("clean: removing old jar: ${f.name}")
+                    f.delete()
+                }
+            }
+        }
+    }
+}
+
+tasks.named('build') {
+    finalizedBy deploy
+}

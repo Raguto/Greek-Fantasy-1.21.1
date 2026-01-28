@@ -1,0 +1,34 @@
+{
+  "structures": [
+    {
+      "structure": "greekfantasy:satyr_camp",
+      "weight": 2
+    },
+    {
+      "structure": "greekfantasy:ara_camp",
+      "weight": 2
+    },
+    {
+      "structure": "greekfantasy:centaur_camp",
+      "weight": 2
+    },
+    {
+      "structure": "greekfantasy:harpy_grove",
+      "weight": 1
+    },
+    {
+      "structure": "greekfantasy:gigante_camp",
+      "weight": 1
+    },
+    {
+      "structure": "greekfantasy:cyclops_cave",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 15,
+    "separation": 9,
+    "salt": 188482002
+  }
+}

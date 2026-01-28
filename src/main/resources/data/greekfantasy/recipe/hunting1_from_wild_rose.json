@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "greekfantasy:wild_rose" },
+    { "item": "minecraft:book" }
+  ],
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "components": {
+      "minecraft:stored_enchantments": {
+        "levels": {
+          "greekfantasy:hunting": 1
+        }
+      }
+    }
+  }
+}

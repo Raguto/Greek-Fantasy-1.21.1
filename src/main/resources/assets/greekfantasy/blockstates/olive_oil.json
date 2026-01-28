@@ -1,0 +1,143 @@
+{
+  "multipart": [
+    {
+     "when": {
+      	"lit": "false",
+      	"waterlogged": "false"
+      },
+      "apply": [
+        {
+          "model": "greekfantasy:block/olive_oil"
+        }
+      ]
+    },
+    {
+     "when": {
+      	"lit": "false",
+      	"waterlogged": "true"
+      },
+      "apply": [
+        {
+          "model": "greekfantasy:block/olive_oil_water"
+        }
+      ]
+    },
+    {
+      "when": {
+        "lit": "true",
+        "waterlogged": "true"
+      },
+      "apply": [
+        {
+          "model": "minecraft:block/air"
+        }
+      ]
+    },
+    {
+      "when": {
+      	"lit": "true",
+      	"waterlogged": "false"
+      },
+      "apply": [
+        {
+          "model": "greekfantasy:block/soul_fire_floor0"
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_floor1"
+        }
+      ]
+    },
+    {
+      "when": {
+      	"lit": "true",
+      	"waterlogged": "false"
+      },
+      "apply": [
+        {
+          "model": "greekfantasy:block/soul_fire_side0"
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side1"
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt0"
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt1"
+        }
+      ]
+    },
+    {
+      "when": {
+      	"lit": "true",
+      	"waterlogged": "false"
+      },
+      "apply": [
+        {
+          "model": "greekfantasy:block/soul_fire_side0",
+          "y": 90
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side1",
+          "y": 90
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt0",
+          "y": 90
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt1",
+          "y": 90
+        }
+      ]
+    },
+    {
+      "when": {
+      	"lit": "true",
+      	"waterlogged": "false"
+      },
+      "apply": [
+        {
+          "model": "greekfantasy:block/soul_fire_side0",
+          "y": 180
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side1",
+          "y": 180
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt0",
+          "y": 180
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt1",
+          "y": 180
+        }
+      ]
+    },
+    {
+      "when": {
+      	"lit": "true",
+      	"waterlogged": "false"
+      },
+      "apply": [
+        {
+          "model": "greekfantasy:block/soul_fire_side0",
+          "y": 270
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side1",
+          "y": 270
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt0",
+          "y": 270
+        },
+        {
+          "model": "greekfantasy:block/soul_fire_side_alt1",
+          "y": 270
+        }
+      ]
+    }
+  ]
+}

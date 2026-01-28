@@ -1,0 +1,24 @@
+{
+
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  /",
+    " /S",
+    "/#S"
+  ],
+  "key": {
+    "#": { "item": "greekfantasy:dragon_tooth" },
+    "S": { "item": "greekfantasy:golden_string" },
+    "/": { "item": "greekfantasy:scylla_bone" }
+  },
+  "result": {
+    "id": "greekfantasy:dragon_tooth_rod",
+    "components": {
+      "minecraft:enchantments": {
+        "levels": {
+          "minecraft:luck_of_the_sea": 3
+        }
+      }
+    }
+  }
+}

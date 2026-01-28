@@ -1,0 +1,21 @@
+{
+  "parent":"neoforge:item/default",
+  "loader":"neoforge:separate_transforms",
+  "base": {
+    "parent": "greekfantasy:block/light_gray_terracotta_vase"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+	  "textures": {
+		"layer0": "greekfantasy:item/light_gray_terracotta_vase"
+	  }
+    },
+    "fixed": {
+      "parent": "minecraft:item/generated",
+	  "textures": {
+		"layer0": "greekfantasy:item/light_gray_terracotta_vase"
+	  }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "greekfantasy:replace_drops",
+  "conditions": [
+    {
+      "condition": "minecraft:block_state_property",
+      "block": "minecraft:spruce_leaves"
+    },
+    {
+      "chances": [
+        0.025,
+        0.0325,
+        0.043333336,
+        0.05
+      ],
+      "condition": "minecraft:table_bonus",
+      "enchantment": "minecraft:fortune"
+    }
+  ],
+  "itemstack": {
+    "id": "greekfantasy:pinecone",
+    "Count": 1
+  },
+  "replace": false
+}

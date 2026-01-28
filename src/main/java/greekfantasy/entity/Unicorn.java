@@ -1,0 +1,229 @@
+package greekfantasy.entity;
+
+import greekfantasy.GFRegistry;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
+
+public class Unicorn extends AbstractHorse {
+
+    public Unicorn(EntityType<? extends Unicorn> type, Level level) {
+        super(type, level);
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return AbstractHorse.createBaseHorseAttributes().add(Attributes.ARMOR, 2.0D);
+    }
+
+    @Override
+    public void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(4, new AvoidEntityGoal<>(this, Player.class, 16.0F, 1.1D, 0.95D, (entity) -> {
+            return !entity.isDiscrete() && !this.isVehicle() &&
+                    (!this.isTamed() || this.getOwnerUUID() == null || !entity.getUUID().equals(this.getOwnerUUID()));
+        }));
+    }
+
+    // CALLED FROM ON INITIAL SPAWN //
+
+    @Override
+    protected void randomizeAttributes(RandomSource random) {
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(this.generateRandomMaxHealth(random));
+        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(this.generateRandomSpeed(random));
+        this.getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(this.generateRandomJumpStrength(random));
+    }
+
+    protected float generateRandomMaxHealth(RandomSource random) {
+        return super.generateMaxHealth(random::nextInt) + 28.0F;
+    }
+
+    protected double generateRandomJumpStrength(RandomSource random) {
+        return super.generateJumpStrength(random::nextDouble) + 0.22F;
+    }
+
+    protected double generateRandomSpeed(RandomSource random) {
+        return super.generateSpeed(random::nextDouble) + 0.16F;
+    }
+
+    // MISC //
+
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if(level().isClientSide() && random.nextFloat() < 0.25F) {
+            // spawn particles
+            float radius = getBbWidth();
+            level().addParticle(ParticleTypes.INSTANT_EFFECT,
+                    this.getX() + (level().random.nextDouble() - 0.5D) * radius,
+                    this.getY() + (level().random.nextDouble() - 0.5D) * radius * 0.75D,
+                    this.getZ() + (level().random.nextDouble() - 0.5D) * radius,
+                    0, 0, 0);
+        }
+    }
+
+    /**
+     * Called when the mob's health reaches 0.
+     */
+    public void die(DamageSource cause) {
+        super.die(cause);
+        if (cause.getEntity() instanceof LivingEntity) {
+            LivingEntity killer = (LivingEntity) cause.getEntity();
+            killer.addEffect(new MobEffectInstance(MobEffects.UNLUCK, 12_000, 0, false, false, true));
+        }
+    }
+
+    @Override
+    protected void actuallyHurt(final DamageSource source, final float amountIn) {
+        super.actuallyHurt(source, source.is(DamageTypeTags.BYPASSES_ENCHANTMENTS) || source.is(DamageTypeTags.BYPASSES_ARMOR) ? amountIn : amountIn * 0.5F);
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance effect) {
+        if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
+            // 1.21: MobEffectEvent.Applicable constructor now requires 3 args (entity, effect, source)
+            // and uses MobEffectEvent.Applicable.Result enum instead of Event.Result
+            MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, effect, null);
+            event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+            NeoForge.EVENT_BUS.post(event);
+            return event.getResult() == MobEffectEvent.Applicable.Result.APPLY;
+        }
+        return super.canBeAffected(effect);
+    }
+
+    // Note: getPassengersRidingOffset removed in 1.21 - riding offset is now handled via EntityType builder
+
+    @Override
+    protected void playGallopSound(SoundType sound) {
+        super.playGallopSound(sound);
+        if (this.random.nextInt(10) == 0) {
+            this.playSound(SoundEvents.HORSE_BREATHE, sound.getVolume() * 0.6F, sound.getPitch());
+        }
+        // onHorseArmorTick removed in 1.21 - horse armor ticking is no longer supported via ItemStack
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        super.getAmbientSound();
+        return SoundEvents.HORSE_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        super.getDeathSound();
+        return SoundEvents.HORSE_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getEatingSound() {
+        return SoundEvents.HORSE_EAT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        super.getHurtSound(damageSourceIn);
+        return SoundEvents.HORSE_HURT;
+    }
+
+    @Override
+    protected SoundEvent getAngrySound() {
+        super.getAngrySound();
+        return SoundEvents.HORSE_ANGRY;
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (!this.isBaby()) {
+            if (this.isTamed() && player.isSecondaryUseActive()) {
+                this.openCustomInventoryScreen(player);
+                return InteractionResult.sidedSuccess(this.level().isClientSide());
+            }
+
+            if (this.isVehicle()) {
+                return super.mobInteract(player, hand);
+            }
+
+            if ((itemstack.isEmpty() && this.isTamed()) || itemstack.is(GFRegistry.ItemReg.GOLDEN_BRIDLE.get())) {
+                this.doPlayerRide(player);
+                return InteractionResult.sidedSuccess(this.level().isClientSide());
+            }
+        }
+
+        if (!itemstack.isEmpty()) {
+            if (this.isFood(itemstack)) {
+                return this.fedFood(player, itemstack);
+            }
+
+            InteractionResult actionresulttype = itemstack.interactLivingEntity(player, this, hand);
+            if (actionresulttype.consumesAction()) {
+                return actionresulttype;
+            }
+
+            if (!this.isTamed()) {
+                this.makeMad();
+                return InteractionResult.sidedSuccess(this.level().isClientSide());
+            }
+
+            boolean isUsableSaddle = !this.isBaby() && !this.isSaddled() && itemstack.is(Items.SADDLE);
+            if (this.isBodyArmorItem(itemstack) || isUsableSaddle) {
+                this.openCustomInventoryScreen(player);
+                return InteractionResult.sidedSuccess(this.level().isClientSide());
+            }
+        }
+
+        return super.mobInteract(player, hand);
+    }
+
+    @Override
+    public int getMaxTemper() {
+        return 160;
+    }
+
+    @Override
+    public boolean canMate(final Animal otherAnimal) {
+        if (otherAnimal == this) {
+            return false;
+        } else {
+            return otherAnimal instanceof Unicorn && this.canParent() && ((Unicorn) otherAnimal).canParent();
+        }
+    }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
+        Unicorn unicorn = GFRegistry.EntityReg.UNICORN.get().create(world);
+        this.setOffspringAttributes(mate, unicorn);
+        return unicorn;
+    }
+
+}

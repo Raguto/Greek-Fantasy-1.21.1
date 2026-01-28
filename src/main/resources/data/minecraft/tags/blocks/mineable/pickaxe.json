@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "greekfantasy:bronze_block",
+    "greekfantasy:limestone",
+    "greekfantasy:limestone_slab",
+    "greekfantasy:limestone_stairs",
+    "greekfantasy:polished_limestone",
+    "greekfantasy:polished_limestone_slab",
+    "greekfantasy:polished_limestone_stairs",
+    "greekfantasy:limestone_pillar",
+    "greekfantasy:marble",
+    "greekfantasy:marble_slab",
+    "greekfantasy:marble_stairs",
+    "greekfantasy:polished_marble",
+    "greekfantasy:polished_marble_slab",
+    "greekfantasy:polished_marble_stairs",
+    "greekfantasy:marble_pillar",
+    "greekfantasy:cretan_stone",
+    "greekfantasy:chiseled_cretan_stone",
+    "greekfantasy:polished_cretan_stone",
+    "greekfantasy:cracked_polished_cretan_stone",
+    "greekfantasy:cretan_stone_brick",
+    "greekfantasy:chiseled_cretan_stone_brick",
+    "greekfantasy:cracked_cretan_stone_brick"
+  ]
+}

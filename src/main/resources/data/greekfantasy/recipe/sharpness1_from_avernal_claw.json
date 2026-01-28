@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "greekfantasy:avernal_claw" },
+    { "item": "greekfantasy:avernal_claw" },
+    { "item": "minecraft:book" }
+  ],
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "components": {
+      "minecraft:stored_enchantments": {
+        "levels": {
+          "minecraft:sharpness": 1
+        }
+      }
+    }
+  }
+}

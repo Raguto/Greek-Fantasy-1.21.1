@@ -1,0 +1,223 @@
+// TODO: Rewrite for NeoForge Attachment system
+package greekfantasy.blockentity;
+
+import greekfantasy.GFRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+// import Capability;
+// import ForgeCapabilities;
+// import ;
+// import ;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.Nullable;
+
+public class VaseBlockEntity extends BlockEntity implements Container, Nameable {
+
+    // TODO 1.21: LazyOptional/IItemHandler removed - needs NeoForge item handler rewrite
+    //// TODO: LazyOptional removed
+//private LazyOptional<IItemHandler> itemHandler = //LazyOptional.of(() -> createUnSidedHandler());
+    private final NonNullList<ItemStack> inventory = NonNullList.withSize(1, ItemStack.EMPTY);
+
+    protected Component name;
+
+    public VaseBlockEntity(BlockPos pos, BlockState state) {
+        super(GFRegistry.BlockEntityReg.VASE.get(), pos, state);
+    }
+
+    // CLIENT-SERVER SYNC
+
+    /**
+     * Called when the chunk is saved
+     *
+     * @param registries the registry lookup provider
+     * @return the compound tag to use in #handleUpdateTag
+     */
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        ContainerHelper.saveAllItems(tag, inventory, registries);
+        return tag;
+    }
+
+    /**
+     * Called when the chunk is loaded
+     *
+     * @param tag the compound tag
+     * @param registries the registry lookup provider
+     */
+    @Override
+    public void handleUpdateTag(final CompoundTag tag, HolderLookup.Provider registries) {
+        super.handleUpdateTag(tag, registries);
+        ContainerHelper.loadAllItems(tag, inventory, registries);
+        inventoryChanged();
+    }
+
+    //INVENTORY //
+
+    public NonNullList<ItemStack> getInventory() {
+        return this.inventory;
+    }
+
+    public void dropAllItems() {
+        if (this.level != null && !this.level.isClientSide()) {
+            Containers.dropContents(this.level, this.getBlockPos(), this.getInventory());
+        }
+        this.inventoryChanged();
+    }
+
+    public void inventoryChanged() {
+        if (getLevel() != null && !getLevel().isClientSide()) {
+            getLevel().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+        }
+        ItemStack itemStack = getItem(0);
+        // 1.21: hasCustomHoverName() removed - use DataComponents.CUSTOM_NAME
+        this.name = itemStack.has(net.minecraft.core.component.DataComponents.CUSTOM_NAME) ? itemStack.getHoverName() : null;
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        this.inventoryChanged();
+    }
+
+    @Override
+    public void clearContent() {
+        this.getInventory().clear();
+        this.setChanged();
+    }
+
+    @Override
+    public int getContainerSize() {
+        return this.getInventory().size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.getInventory().isEmpty();
+    }
+
+    /**
+     * Returns the stack in the given slot.
+     */
+    public ItemStack getItem(int index) {
+        return index >= 0 && index < this.getInventory().size() ? this.getInventory().get(index) : ItemStack.EMPTY;
+    }
+
+    /**
+     * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+     */
+    @Override
+    public ItemStack removeItem(int index, int count) {
+        ItemStack itemStack = ContainerHelper.removeItem(this.getInventory(), index, count);
+        return itemStack;
+    }
+
+    /**
+     * Removes a stack from the given slot and returns it.
+     */
+    @Override
+    public ItemStack removeItemNoUpdate(int index) {
+        ItemStack itemStack = ContainerHelper.takeItem(this.getInventory(), index);
+        return itemStack;
+    }
+
+    /**
+     * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+     */
+    @Override
+    public void setItem(int index, ItemStack stack) {
+        if (index >= 0 && index < this.getInventory().size()) {
+            this.getInventory().set(index, stack);
+            this.inventoryChanged();
+        }
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        if (this.level.getBlockEntity(this.worldPosition) != this) {
+            return false;
+        } else {
+            return !(player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D,
+                    (double) this.worldPosition.getZ() + 0.5D) > 64.0D);
+        }
+    }
+
+    // NBT / SAVING
+
+    @Override
+    protected void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+        super.loadAdditional(nbt, registries);
+        this.getInventory().clear();
+        ContainerHelper.loadAllItems(nbt, this.getInventory(), registries);
+        this.inventoryChanged();
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        ContainerHelper.saveAllItems(tag, this.getInventory(), registries);
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    // NAMEABLE
+
+    protected Component getDefaultName() {
+        return Component.translatable("container.vase");
+    }
+
+    @Override
+    public Component getName() {
+        return this.name != null ? this.name : this.getDefaultName();
+    }
+
+    @Nullable
+    @Override
+    public Component getCustomName() {
+        return this.name;
+    }
+
+    // TODO 1.21: Capability system completely removed - needs rewrite with NeoForge attachments
+    /*
+    protected IItemHandler createUnSidedHandler() {
+        return new InvWrapper(this);
+    }
+
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        if (!this.remove && cap == ForgeCapabilities.ITEM_HANDLER) {
+            return itemHandler.cast();
+        }
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        itemHandler.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        itemHandler = LazyOptional.of(() -> createUnSidedHandler());
+    }
+    */
+}

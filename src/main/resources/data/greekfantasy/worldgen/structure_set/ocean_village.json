@@ -1,0 +1,16 @@
+{
+  "structures": [
+    {
+      "structure": "greekfantasy:ocean_village",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 15,
+    "separation": 10,
+    "salt": 1067145488,
+    "frequency": 0.4,
+    "frequency_reduction_method": "legacy_type_3"
+  }
+}

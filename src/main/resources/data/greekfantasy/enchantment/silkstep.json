@@ -1,0 +1,10 @@
+{
+  "description": {"translate": "enchantment.greekfantasy.silkstep"},
+  "supported_items": "#minecraft:foot_armor_enchantable",
+  "weight": 5,
+  "max_level": 1,
+  "min_cost": {"base": 15, "per_level_above_first": 0},
+  "max_cost": {"base": 65, "per_level_above_first": 0},
+  "anvil_cost": 2,
+  "slots": ["feet"]
+}

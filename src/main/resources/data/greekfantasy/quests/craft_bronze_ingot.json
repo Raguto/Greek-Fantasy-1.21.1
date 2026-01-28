@@ -1,0 +1,8 @@
+{
+  "disabled": false,
+  "description": "quest.greekfantasy.craft_bronze_ingot",
+  "components": [
+    "quest.greekfantasy.craft_bronze_ingot.line1",
+    "quest.greekfantasy.craft_bronze_ingot.line2"
+  ]
+}

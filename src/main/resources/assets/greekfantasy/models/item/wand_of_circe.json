@@ -1,0 +1,16 @@
+{
+	"parent":"neoforge:item/default",
+	"loader":"neoforge:separate_transforms",
+	"base": {
+		"parent": "greekfantasy:item/wand_of_circe_held"
+	},
+	"perspectives": {
+		"gui": {
+			"parent": "minecraft:item/generated",
+			"textures": {
+				"layer0": "greekfantasy:item/wand_of_circe"
+			}
+		}
+	}
+}
+

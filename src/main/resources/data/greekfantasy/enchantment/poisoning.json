@@ -1,0 +1,10 @@
+{
+  "description": {"translate": "enchantment.greekfantasy.poisoning"},
+  "supported_items": "#greekfantasy:enchantable/poisoning",
+  "weight": 10,
+  "max_level": 1,
+  "min_cost": {"base": 10, "per_level_above_first": 0},
+  "max_cost": {"base": 60, "per_level_above_first": 0},
+  "anvil_cost": 2,
+  "slots": ["armor"]
+}

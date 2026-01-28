@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#greekfantasy:has_spawn/lampad",
+  "spawners": [
+    {
+      "type": "greekfantasy:lampad",
+      "weight": 26,
+      "minCount": 2,
+      "maxCount": 5
+    }
+  ]
+}

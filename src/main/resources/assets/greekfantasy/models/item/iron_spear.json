@@ -1,0 +1,35 @@
+{
+  "parent":"neoforge:item/default",
+  "loader":"neoforge:separate_transforms",
+  "base": {
+    "parent": "greekfantasy:item/spear_in_hand",
+    "textures": {
+      "spear": "greekfantasy:item/iron_spear"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+	  "textures": {
+		"layer0": "greekfantasy:item/iron_spear"
+	  }
+    },
+    "ground": {
+      "parent": "minecraft:item/generated",
+	  "textures": {
+		"layer0": "greekfantasy:item/iron_spear"
+	  }
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "minecraft:throwing": 1
+      },
+      "model": "greekfantasy:item/spear_throwing",
+      "textures": {
+        "spear": "greekfantasy:item/iron_spear"
+      }
+    }
+  ]
+}

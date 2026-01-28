@@ -1,0 +1,18 @@
+{
+  "parent":"neoforge:item/default",
+  "loader":"neoforge:separate_transforms",
+  "base": {
+    "parent": "greekfantasy:item/club",
+	"textures": {
+	  "spikes": "minecraft:block/oak_log"
+	}
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+	  "textures": {
+		"layer0": "greekfantasy:item/wooden_club"
+	  }
+    }
+  }
+}

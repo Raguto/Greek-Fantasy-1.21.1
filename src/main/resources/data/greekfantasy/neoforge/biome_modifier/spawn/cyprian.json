@@ -1,0 +1,12 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#greekfantasy:has_spawn/centaur",
+  "spawners": [
+    {
+      "type": "greekfantasy:cyprian",
+      "weight": 19,
+      "minCount": 2,
+      "maxCount": 4
+    }
+  ]
+}

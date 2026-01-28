@@ -1,0 +1,10 @@
+{
+	"screens" : [
+		{
+			"class" : "greekfantasy.client.gui.PanfluteScreen", 
+			"texture" : "greekfantasy:textures/gui/panflute.png",
+			"size" : [154, 150], 
+			"texSize" : [256, 256]
+		}
+	]
+}

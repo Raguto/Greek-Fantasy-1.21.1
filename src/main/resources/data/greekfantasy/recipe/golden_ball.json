@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": { "item": "greekfantasy:golden_string" }
+  },
+  "result": {
+    "id": "greekfantasy:golden_ball"
+  }
+}

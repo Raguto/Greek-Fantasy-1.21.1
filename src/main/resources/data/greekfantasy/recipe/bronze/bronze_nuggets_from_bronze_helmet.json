@@ -1,0 +1,13 @@
+{
+  "group": "greekfantasy:bronze",
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "greekfantasy:bronze_helmet"
+  },
+  "result": {
+    "id": "greekfantasy:bronze_nugget",
+    "count": 18
+  },
+  "experience": 0.2,
+  "cookingtime": 200
+}

@@ -1,0 +1,24 @@
+{
+  "parent":"neoforge:item/default",
+  "loader":"neoforge:separate_transforms",
+  "base": {
+    "parent": "greekfantasy:block/vase",
+	 "textures": {
+		"texture": "greekfantasy:item/greek_fire_3d"
+	 }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+	  "textures": {
+		"layer0": "greekfantasy:item/greek_fire"
+	  }
+    },
+    "ground": {
+      "parent": "greekfantasy:block/vase",
+      "textures": {
+        "texture": "greekfantasy:item/greek_fire_3d"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "disabled": false,
+  "description": "quest.greekfantasy.summon_giant_boar",
+  "components": [
+    "quest.greekfantasy.summon_giant_boar.line1",
+    "quest.greekfantasy.summon_giant_boar.line2"
+  ]
+}

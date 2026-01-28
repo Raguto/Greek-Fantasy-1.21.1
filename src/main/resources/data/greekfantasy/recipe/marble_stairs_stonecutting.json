@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "greekfantasy:marble"
+  },
+  "result": {
+    "id": "greekfantasy:marble_stairs",
+    "count": 1
+  }
+}
